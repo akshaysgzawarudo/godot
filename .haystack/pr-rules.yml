@@ -1,0 +1,201 @@
+rules:
+  - id: "godot-error-and-logging-macros"
+    name: "Use Godot error and logging facilities"
+    type: llm
+    severity: warning
+    category: "style"
+    message: "In engine C++ code, use Godot ERR_*/WARN_*/CRASH_* macros and engine logging APIs instead of ad-hoc checks, exceptions, or stdio-style logging."
+    llm:
+      prompt: "In engine C++ code, use Godot ERR_*/WARN_*/CRASH_* macros and engine logging APIs instead of ad-hoc checks, exceptions, or stdio-style logging."
+  - id: "translation-macro-and-refresh-correctness"
+    name: "Use translation APIs correctly"
+    type: llm
+    severity: warning
+    category: "style"
+    message: "Use the correct translation macro variant (for example TTR vs TTRC with TTRC only for static strings) and refresh editor UI text on NOTIFICATION_TRANSLATION_CHANGED."
+    llm:
+      prompt: "Use the correct translation macro variant (for example TTR vs TTRC with TTRC only for static strings) and refresh editor UI text on NOTIFICATION_TRANSLATION_CHANGED."
+  - id: "use-stringname-constants-not-literals"
+    name: "Use StringName constants for engine symbols"
+    type: llm
+    severity: warning
+    category: "performance"
+    message: "Use SceneStringName/CoreStringName/SNAME constants for built-in signal, theme, and property names instead of raw string literals when constants exist."
+    llm:
+      prompt: "Use SceneStringName/CoreStringName/SNAME constants for built-in signal, theme, and property names instead of raw string literals when constants exist."
+  - id: "prefer-const-ref-and-avoid-copies"
+    name: "Avoid unnecessary copies of heavy types"
+    type: llm
+    severity: warning
+    category: "performance"
+    message: "Use const references in parameters and range loops, and avoid copying containers/collections unless mutation or ownership transfer is required."
+    llm:
+      prompt: "Use const references in parameters and range loops, and avoid copying containers/collections unless mutation or ownership transfer is required."
+  - id: "minimize-header-coupling"
+    name: "Minimize header dependencies"
+    type: llm
+    severity: warning
+    category: "performance"
+    message: "In headers, prefer forward declarations over unnecessary includes and never include .cpp files."
+    llm:
+      prompt: "In headers, prefer forward declarations over unnecessary includes and never include .cpp files."
+  - id: "follow-godot-cpp-naming-conventions"
+    name: "Follow Godot C++ naming conventions"
+    type: llm
+    severity: warning
+    category: "style"
+    message: "Follow project naming/signature conventions including snake_case, p_ for parameters only, r_ for output references, and expected API type conventions."
+    llm:
+      prompt: "Follow project naming/signature conventions including snake_case, p_ for parameters only, r_ for output references, and expected API type conventions."
+  - id: "remove-unused-redundant-and-debug-code"
+    name: "Keep code clean of dead/debug leftovers"
+    type: llm
+    severity: warning
+    category: "style"
+    message: "Do not keep unused includes/variables/conditions or temporary debug prints/statements in final changes."
+    llm:
+      prompt: "Do not keep unused includes/variables/conditions or temporary debug prints/statements in final changes."
+  - id: "use-engine-helpers-over-reimplementation"
+    name: "Prefer existing engine helpers"
+    type: llm
+    severity: warning
+    category: "style"
+    message: "Use established engine helper APIs and typed cast/access helpers instead of reimplementing equivalent behavior or routing through unnecessary Variant/reflection paths."
+    llm:
+      prompt: "Use established engine helper APIs and typed cast/access helpers instead of reimplementing equivalent behavior or routing through unnecessary Variant/reflection paths."
+  - id: "cache-repeated-expensive-lookups"
+    name: "Cache repeated expensive lookups"
+    type: llm
+    severity: warning
+    category: "performance"
+    message: "Cache repeated settings/class/string lookups and similar costly calls outside tight loops or hot paths."
+    llm:
+      prompt: "Cache repeated settings/class/string lookups and similar costly calls outside tight loops or hot paths."
+  - id: "avoid-hot-path-allocations"
+    name: "Avoid allocations in hot paths"
+    type: llm
+    severity: warning
+    category: "performance"
+    message: "In frequently executed runtime/editor paths, reuse buffers/objects and reserve capacity instead of allocating per frame/request."
+    llm:
+      prompt: "In frequently executed runtime/editor paths, reuse buffers/objects and reserve capacity instead of allocating per frame/request."
+  - id: "preserve-layer-boundaries"
+    name: "Keep core/runtime boundaries clean"
+    type: llm
+    severity: warning
+    category: "patterns"
+    message: "Do not introduce dependencies from core/runtime code to editor or module-specific implementations; use abstractions/interfaces instead."
+    llm:
+      prompt: "Do not introduce dependencies from core/runtime code to editor or module-specific implementations; use abstractions/interfaces instead."
+  - id: "guard-platform-thread-deprecated-paths"
+    name: "Use correct compile-time guards"
+    type: llm
+    severity: warning
+    category: "patterns"
+    message: "Wrap platform-specific, threaded, and deprecated code with the correct compile-time guards (including THREADS_ENABLED and DISABLE_DEPRECATED)."
+    llm:
+      prompt: "Wrap platform-specific, threaded, and deprecated code with the correct compile-time guards (including THREADS_ENABLED and DISABLE_DEPRECATED)."
+  - id: "preserve-deprecated-api-compatibility"
+    name: "Keep deprecated APIs compatible"
+    type: llm
+    severity: warning
+    category: "patterns"
+    message: "When deprecating public APIs, keep old behavior available under compatibility/deprecation guards and direct users to replacements instead of immediate removal."
+    llm:
+      prompt: "When deprecating public APIs, keep old behavior available under compatibility/deprecation guards and direct users to replacements instead of immediate removal."
+  - id: "preserve-public-enum-and-behavior-compatibility"
+    name: "Preserve serialized/public compatibility"
+    type: llm
+    severity: warning
+    category: "patterns"
+    message: "Do not rename/renumber serialized or public enum/selection semantics and avoid changing duplicate-key or precedence behavior without explicit compatibility handling."
+    llm:
+      prompt: "Do not rename/renumber serialized or public enum/selection semantics and avoid changing duplicate-key or precedence behavior without explicit compatibility handling."
+  - id: "menu-and-callable-correctness"
+    name: "Use stable menu and callable checks"
+    type: llm
+    severity: warning
+    category: "patterns"
+    message: "Use menu item IDs (not hardcoded indices) and use Callable.is_valid() for callable validity checks."
+    llm:
+      prompt: "Use menu item IDs (not hardcoded indices) and use Callable.is_valid() for callable validity checks."
+  - id: "avoid-const-cast-for-cache-mutation"
+    name: "Do not use const_cast for cache updates"
+    type: llm
+    severity: warning
+    category: "style"
+    message: "Do not mutate state with const_cast in const methods; use mutable fields when intentional cache updates are needed."
+    llm:
+      prompt: "Do not mutate state with const_cast in const methods; use mutable fields when intentional cache updates are needed."
+  - id: "use-queue-free-directly"
+    name: "Call queue_free directly"
+    type: llm
+    severity: warning
+    category: "style"
+    message: "Call queue_free() directly instead of call_deferred(\"queue_free\") for normal node deletion flow."
+    llm:
+      prompt: "Call queue_free() directly instead of call_deferred(\"queue_free\") for normal node deletion flow."
+  - id: "lsp-endpoint-and-scaling-rules"
+    name: "Follow GDScript LSP endpoint rules"
+    type: llm
+    severity: warning
+    category: "performance"
+    message: "Implement new LSP endpoints on GDScriptLanguageProtocol with lsp_ naming and avoid full-project reparse/analyze on each request."
+    llm:
+      prompt: "Implement new LSP endpoints on GDScriptLanguageProtocol with lsp_ naming and avoid full-project reparse/analyze on each request."
+  - id: "physics-rotation-and-zero-check-correctness"
+    name: "Keep physics rotation/math semantics correct"
+    type: llm
+    severity: warning
+    category: "patterns"
+    message: "Use documented coordinate spaces for joint rotation APIs, prefer direct quaternion operations, and use is_zero_approx for velocity zero checks."
+    llm:
+      prompt: "Use documented coordinate spaces for joint rotation APIs, prefer direct quaternion operations, and use is_zero_approx for velocity zero checks."
+  - id: "documentation-required-for-api-changes"
+    name: "Document public API and behavior changes"
+    type: llm
+    severity: warning
+    category: "patterns"
+    message: "When adding/changing script-exposed APIs or user-visible behavior, update corresponding doc/classes entries with accurate descriptions, constraints, and links."
+    llm:
+      prompt: "When adding/changing script-exposed APIs or user-visible behavior, update corresponding doc/classes entries with accurate descriptions, constraints, and links."
+  - id: "docs-link-and-style-consistency"
+    name: "Keep docs links and style consistent"
+    type: llm
+    severity: warning
+    category: "patterns"
+    message: "Use explicit class references for doc links and follow established documentation style conventions, including required formatting like tabs in XML code blocks."
+    llm:
+      prompt: "Use explicit class references for doc links and follow established documentation style conventions, including required formatting like tabs in XML code blocks."
+  - id: "avoid-unnecessary-doc-translation-churn"
+    name: "Avoid unnecessary docs wording churn"
+    type: llm
+    severity: warning
+    category: "patterns"
+    message: "Avoid non-essential doc rewording that invalidates translations unless it fixes correctness or is part of a focused documentation effort."
+    llm:
+      prompt: "Avoid non-essential doc rewording that invalidates translations unless it fixes correctness or is part of a focused documentation effort."
+  - id: "require-doc-descriptions-for-new-items"
+    name: "Require descriptions for new doc API items"
+    type: llm
+    severity: warning
+    category: "patterns"
+    message: "Every newly added documented method/signal/member/constant must include a clear description and avoid doc generation errors."
+    llm:
+      prompt: "Every newly added documented method/signal/member/constant must include a clear description and avoid doc generation errors."
+  - id: "preserve-gdextension-compatibility"
+    name: "Maintain GDExtension compatibility"
+    type: llm
+    severity: warning
+    category: "patterns"
+    message: "Do not introduce GDExtension API/ABI changes that break compatibility validation against supported stable references."
+    llm:
+      prompt: "Do not introduce GDExtension API/ABI changes that break compatibility validation against supported stable references."
+  - id: "exclude-sensitive-or-generated-artifacts"
+    name: "Exclude sensitive and generated artifacts"
+    type: llm
+    severity: warning
+    category: "security"
+    message: "Do not commit massive generated artifacts and do not include VCS metadata (such as .git) in reproduction projects."
+    llm:
+      prompt: "Do not commit massive generated artifacts and do not include VCS metadata (such as .git) in reproduction projects."
